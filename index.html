@@ -44,7 +44,7 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -114,8 +114,8 @@
         }
         
         .parameter-header {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
+            background: #87aabd;
+            color: rgb(252, 251, 251);
             padding: 15px 20px;
             font-weight: bold;
             font-size: 18px;
@@ -161,7 +161,7 @@
         }
         
         .calculate-btn {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            background: #FF8C73;
             color: white;
             border: none;
             padding: 15px 30px;
@@ -179,6 +179,31 @@
             box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
         }
         
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .clear-data-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: block;
+            margin: 15px auto 30px auto;
+        }
+
+        .clear-data-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(149, 165, 166, 0.3);
+            background: #7f8c8d;
+        }
+
         .result-section {
             background: #f8f9fa;
             border-radius: 15px;
@@ -355,7 +380,7 @@
         }
         
         .tab-button.active {
-            background: linear-gradient(135deg, #3498db, #2980b9);
+            background: #6C838F;
             color: white;
             box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
@@ -664,6 +689,172 @@
             background: white;
             padding: 0 20px;
         }
+
+        .export-excel-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .export-excel-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(46, 204, 113, 0.3);
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .progress-info span:first-child {
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .progress-info span:last-child {
+            color: #3498db;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.2) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255,255,255,0.2) 50%, 
+                rgba(255,255,255,0.2) 75%, 
+                transparent 75%, 
+                transparent);
+            background-size: 20px 20px;
+            animation: progress-stripes 1s linear infinite;
+        }
+
+        @keyframes progress-stripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+
+        .progress-details {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .progress-details .current-file {
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .file-scroll-container {
+            max-height: 400px; /* 大約可顯示10個文件項目的高度 */
+            overflow-y: auto;
+            overflow-x: hidden;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            background: #f8f9fa;
+            padding: 5px;
+        }
+
+        /* 自定義滾動條樣式 */
+        .file-scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .file-scroll-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        .file-scroll-container::-webkit-scrollbar-thumb {
+            background: #3498db;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .file-scroll-container::-webkit-scrollbar-thumb:hover {
+            background: #2980b9;
+        }
+
+        /* 滾動提示 */
+        .file-scroll-container::after {
+            content: '';
+            display: block;
+            height: 1px;
+        }
+
+        /* 當文件超過容器高度時顯示漸變效果 */
+        .file-scroll-container.has-scroll {
+            position: relative;
+        }
+
+        .file-scroll-container.has-scroll::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 8px; /* 避免覆蓋滾動條 */
+            height: 20px;
+            background: linear-gradient(transparent, rgba(248, 249, 250, 0.8));
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 優化文件項目在滾動容器中的顯示 */
+        .file-scroll-container .file-item {
+            margin: 5px;
+            background: white;
+        }
+
+        .file-scroll-container .file-item:hover {
+            transform: none; /* 在滾動容器中不要有過多的動畫效果 */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
     </style>
 </head>
 <body>
@@ -700,7 +891,7 @@
                         </div>
                         
                         <div class="parameter-section">
-                            <div class="parameter-header">📊 ODI 3% (氧氣不飽和指數)</div>
+                            <div class="parameter-header">ODI 3% (氧氣不飽和指數)</div>
                             <div class="parameter-content">
                                 <div class="parameter-row">
                                     <div class="parameter-label">ODI 3% 數值</div>
@@ -712,7 +903,7 @@
                         </div>
                         
                         <div class="parameter-section">
-                            <div class="parameter-header">🫁 最小血氧飽和度 (SpO2)</div>
+                            <div class="parameter-header">最小血氧飽和度 (SpO2)</div>
                             <div class="parameter-content">
                                 <div class="parameter-row">
                                     <div class="parameter-label">最小 SpO2 (%)</div>
@@ -724,7 +915,7 @@
                         </div>
                         
                         <div class="parameter-section">
-                            <div class="parameter-header">⏱️ T90 (血氧<90%時間比例)</div>
+                            <div class="parameter-header">T90 (血氧<90%時間比例)</div>
                             <div class="parameter-content">
                                 <div class="parameter-row">
                                     <div class="parameter-label">T90 (%)</div>
@@ -736,6 +927,7 @@
                         </div>
                         
                         <button class="calculate-btn" onclick="calculateRisk()">計算風險等級</button>
+                        <button class="clear-data-btn" onclick="clearSingleAssessmentData()">🗑️ 清空數據</button>
                     </div>
                     
                     <div class="result-section" id="resultSection">
@@ -784,7 +976,7 @@
                             <div class="upload-content">
                                 <div class="upload-icon">📄</div>
                                 <div class="upload-text">
-                                    <strong>拖拽PDF文件到此處或點擊選擇</strong><br>
+                                    <strong>拖曳PDF文件到此處或點擊選擇</strong><br>
                                     <span>支援多檔案同時上傳</span><br>
                                     <small style="color: #7f8c8d;">系統會自動轉換PDF為Excel並讀取數據</small>
                                 </div>
@@ -794,16 +986,36 @@
                         </div>
                         
                         <div class="file-list" id="fileList" style="display: none;">
-                            <h4>已上傳的文件：</h4>
-                            <div id="uploadedFiles"></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <h4 style="margin: 0;">已上傳的文件：</h4>
+                                <span id="fileCount" style="color: #7f8c8d; font-size: 14px;"></span>
+                            </div>
+                            <div class="file-scroll-container">
+                                <div id="uploadedFiles"></div>
+                            </div>
                             <div class="batch-actions">
                                 <button class="process-btn" onclick="processPDFs()">🔍 開始分析</button>
                                 <button class="clear-btn" onclick="clearFiles()">🗑️清空文件</button>
                             </div>
+                            
+                            <!-- 添加進度條 -->
+                            <div class="progress-container" id="progressContainer" style="display: none;">
+                                <div class="progress-info">
+                                    <span id="progressText">準備中...</span>
+                                    <span id="progressPercent">0%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <div class="progress-details" id="progressDetails"></div>
+                            </div>
                         </div>
                         
                         <div class="batch-results" id="batchResults" style="display: none;">
-                            <h4>分析結果：</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h4 style="margin: 0;">分析結果：</h4>
+                                <button class="export-excel-btn" onclick="exportToExcel()">📊 匯出Excel</button>
+                            </div>
                             <div class="results-summary" id="resultsSummary"></div>
                             <div class="results-table" id="resultsTable"></div>
                         </div>
@@ -892,9 +1104,34 @@
         pdfScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
         document.head.appendChild(pdfScript);
         
+        // 載入SheetJS庫用於Excel匯出
+        const xlsxScript = document.createElement('script');
+        xlsxScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        document.head.appendChild(xlsxScript);
+
         // 設定今天的日期為預設值
         document.getElementById('assessmentDate').valueAsDate = new Date();
         
+        // 清空單一檢測數據的函數
+        function clearSingleAssessmentData() {
+            // 清空輸入欄位
+            document.getElementById('patientName').value = '';
+            document.getElementById('odi3').value = '';
+            document.getElementById('minSpo2').value = '';
+            document.getElementById('t90').value = '';
+            
+            // 重置分數顯示
+            document.getElementById('odi3Score').textContent = '0';
+            document.getElementById('spo2Score').textContent = '0';
+            document.getElementById('t90Score').textContent = '0';
+            
+            // 隱藏結果區域
+            document.getElementById('resultSection').style.display = 'none';
+            
+            // 重設檢查日期為今天
+            document.getElementById('assessmentDate').valueAsDate = new Date();
+        }
+
         // 分頁切換功能
         function switchTab(tabName) {
             // 隱藏所有分頁內容
@@ -911,6 +1148,10 @@
             if (tabName === 'single') {
                 document.getElementById('singleTab').classList.add('active');
                 document.querySelector('.tab-button:first-child').classList.add('active');
+                
+                // 清空單一檢測的數據
+                clearSingleAssessmentData();
+                
             } else if (tabName === 'batch') {
                 document.getElementById('batchTab').classList.add('active');
                 document.querySelector('.tab-button:last-child').classList.add('active');
@@ -954,24 +1195,63 @@
         
         function displayUploadedFiles() {
             const container = document.getElementById('uploadedFiles');
+            const scrollContainer = container.parentElement;
+            const fileCountSpan = document.getElementById('fileCount');
+            
+            // 清空容器
             container.innerHTML = '';
             
+            // 更新文件數量顯示
+            fileCountSpan.textContent = `共 ${uploadedFiles.length} 個文件`;
+            
+            // 創建所有文件項目
             uploadedFiles.forEach((file, index) => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div class="file-info">
-                        <span>📄</span>
-                        <span>${file.name}</span>
-                        <span class="file-size">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
-                    </div>
-                    <div>
-                        <span class="file-status status-pending" id="status-${index}">等待處理</span>
-                        <button onclick="removeFile(${index})" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer;">✕</button>
-                    </div>
-                `;
+                const fileItem = createFileItem(file, index);
                 container.appendChild(fileItem);
             });
+            
+            // 檢查是否需要滾動，添加漸變效果
+            setTimeout(() => {
+                if (container.scrollHeight > scrollContainer.clientHeight) {
+                    scrollContainer.classList.add('has-scroll');
+                } else {
+                    scrollContainer.classList.remove('has-scroll');
+                }
+            }, 100);
+        }
+
+        function createFileItem(file, index) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <span>📄</span>
+                    <span>${file.name}</span>
+                    <span class="file-size">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                </div>
+                <div>
+                    <span class="file-status status-pending" id="status-${index}">等待處理</span>
+                    <button onclick="removeFile(${index})" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer;">✕</button>
+                </div>
+            `;
+            return fileItem;
+        }
+
+        function createFileItem(file, index) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.innerHTML = `
+                <div class="file-info">
+                    <span>📄</span>
+                    <span>${file.name}</span>
+                    <span class="file-size">(${(file.size / 1024 / 1024).toFixed(2)} MB)</span>
+                </div>
+                <div>
+                    <span class="file-status status-pending" id="status-${index}">等待處理</span>
+                    <button onclick="removeFile(${index})" style="margin-left: 10px; background: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 15px; cursor: pointer;">✕</button>
+                </div>
+            `;
+            return fileItem;
         }
         
         function removeFile(index) {
@@ -995,46 +1275,105 @@
                 return;
             }
             
+            // 顯示進度條
+            const progressContainer = document.getElementById('progressContainer');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+            const progressDetails = document.getElementById('progressDetails');
+            
+            // 初始化進度條
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '0%';
+            progressPercent.textContent = '0%';
+            progressText.textContent = '準備開始分析...';
+            progressDetails.innerHTML = `準備處理 ${uploadedFiles.length} 個PDF文件`;
+            
+            // 清空之前的結果
             processedResults = [];
             
-            for (let i = 0; i < uploadedFiles.length; i++) {
+            const totalFiles = uploadedFiles.length;
+            let completedFiles = 0;
+            
+            for (let i = 0; i < totalFiles; i++) {
+                const currentFile = uploadedFiles[i];
                 const statusElement = document.getElementById(`status-${i}`);
-                statusElement.textContent = '讀取PDF...';
+                
+                // 更新當前文件信息
+                progressText.textContent = `正在分析: ${currentFile.name}`;
+                progressDetails.innerHTML = `
+                    <div class="current-file">當前: ${currentFile.name}</div>
+                    <div>進度: ${completedFiles} / ${totalFiles} 個文件已完成</div>
+                `;
+                
+                // 更新狀態為處理中
+                statusElement.textContent = '分析中...';
                 statusElement.className = 'file-status status-processing';
                 
                 try {
-                    const result = await processPDF(uploadedFiles[i], statusElement);
+                    // 處理PDF
+                    const result = await processPDF(currentFile, statusElement);
                     processedResults.push(result);
-                    statusElement.textContent = '完成';
+                    
+                    // 成功處理
+                    statusElement.textContent = '✅ 完成';
                     statusElement.className = 'file-status status-success';
+                    
                 } catch (error) {
                     console.error('處理PDF時出錯:', error);
-                    statusElement.textContent = '錯誤';
+                    
+                    // 處理失敗
+                    statusElement.textContent = '❌ 失敗';
                     statusElement.className = 'file-status status-error';
+                    
                     processedResults.push({
-                        fileName: uploadedFiles[i].name,
+                        fileName: currentFile.name,
                         error: true,
                         errorMessage: error.message
                     });
                 }
+                
+                // 更新完成數量和進度條
+                completedFiles++;
+                const progress = Math.round((completedFiles / totalFiles) * 100);
+                progressFill.style.width = progress + '%';
+                progressPercent.textContent = progress + '%';
+                
             }
             
+            // 所有文件處理完成
+            const successCount = processedResults.filter(r => !r.error).length;
+            const errorCount = processedResults.filter(r => r.error).length;
+            
+            progressText.textContent = '🎉 分析完成！';
+            progressDetails.innerHTML = `
+                <div style="color: #27ae60;">✅ 成功: ${successCount} 個文件</div>
+                ${errorCount > 0 ? `<div style="color: #e74c3c;">❌ 失敗: ${errorCount} 個文件</div>` : ''}
+                <div>總計處理: ${totalFiles} 個文件</div>
+            `;
+            
+            // 顯示結果
             displayBatchResults();
+            
+            // 3秒後隱藏進度條
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 3000);
         }
         
         async function processPDF(file, statusElement) {
             return new Promise(async (resolve, reject) => {
                 try {
                     // 第一步：讀取並解析PDF
-                    statusElement.textContent = '解析PDF內容...';
+                    statusElement.textContent = '📖 讀取PDF...';
                     const pdfData = await readPDFFile(file);
                     
                     // 第二步：提取關鍵數據
-                    statusElement.textContent = '提取檢測數據...';
+                    statusElement.textContent = '🔍 提取數據...';
                     const extractedData = extractDataFromPDFText(pdfData.text, file.name);
                     
                     // 第三步：計算風險等級
-                    statusElement.textContent = '計算風險等級...';
+                    statusElement.textContent = '⚖️ 計算風險...';
                     const result = calculateRiskFromExtractedData(extractedData, file.name);
                     
                     resolve(result);
@@ -1778,6 +2117,17 @@
         }
         
         function calculateRisk() {
+            // 驗證是否有輸入數值
+            const odi3Value = document.getElementById('odi3').value.trim();
+            const minSpo2Value = document.getElementById('minSpo2').value.trim();
+            const t90Value = document.getElementById('t90').value.trim();
+            
+            // 檢查是否至少輸入一個數值
+            if (!odi3Value && !minSpo2Value && !t90Value) {
+                alert('⚠️ 請至少輸入一個檢測數值才能進行風險評估！');
+                return;
+            }
+            
             updateScores();
             
             const odi3Score = parseInt(document.getElementById('odi3Score').textContent);
@@ -1829,6 +2179,112 @@
         document.getElementById('odi3').addEventListener('input', updateScores);
         document.getElementById('minSpo2').addEventListener('input', updateScores);
         document.getElementById('t90').addEventListener('input', updateScores);
+
+        function exportToExcel() {
+            if (processedResults.length === 0) {
+                alert('沒有可匯出的數據！');
+                return;
+            }
+            
+            // 準備Excel數據
+            const excelData = [];
+            
+            // 標題行
+            excelData.push([
+                '文件名稱',
+                '患者姓名', 
+                '記錄時間',
+                '列印日期',
+                'ODI 3% (每小時頻率)',
+                '最小SpO2 (%)',
+                'T90 時間百分比 (%)',
+                'ODI 3% 分數',
+                'SpO2 分數', 
+                'T90 分數',
+                '總分',
+                '風險等級',
+                '處理日期',
+                '備註'
+            ]);
+            
+            // 數據行
+            processedResults.forEach(result => {
+                if (!result.error) {
+                    const noteText = result.missingData ? 
+                        `缺少: ${result.missingData.join(', ')}` : '數據完整';
+                        
+                    excelData.push([
+                        result.fileName,
+                        result.patientName || '未知',
+                        result.recordTime || '未知',
+                        result.printDate || '未知',
+                        result.odi3 !== null ? result.odi3 : '無資料',
+                        result.minSpo2 !== null ? result.minSpo2 : '無資料',
+                        result.t90 !== null ? result.t90 : '無資料',
+                        result.odi3Score,
+                        result.spo2Score,
+                        result.t90Score,
+                        result.totalScore,
+                        result.riskLevel,
+                        result.processDate,
+                        noteText
+                    ]);
+                } else {
+                    excelData.push([
+                        result.fileName,
+                        '處理失敗',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        result.errorMessage
+                    ]);
+                }
+            });
+            
+            // 創建工作表
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            
+            // 設置列寬
+            const colWidths = [
+                {wch: 20}, // 文件名稱
+                {wch: 12}, // 患者姓名
+                {wch: 18}, // 記錄時間
+                {wch: 15}, // 列印日期
+                {wch: 12}, // ODI 3%
+                {wch: 12}, // 最小SpO2
+                {wch: 12}, // T90
+                {wch: 10}, // ODI 3% 分數
+                {wch: 10}, // SpO2 分數
+                {wch: 10}, // T90 分數
+                {wch: 8},  // 總分
+                {wch: 12}, // 風險等級
+                {wch: 12}, // 處理日期
+                {wch: 15}  // 備註
+            ];
+            ws['!cols'] = colWidths;
+            
+            // 創建工作簿
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "OSA風險評估結果");
+            
+            // 生成文件名
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0,10).replace(/-/g, '');
+            const timeStr = now.toTimeString().slice(0,8).replace(/:/g, '');
+            const fileName = `OSA風險評估結果_${dateStr}_${timeStr}.xlsx`;
+            
+            // 下載文件
+            XLSX.writeFile(wb, fileName);
+        }
+
     </script>
 </body>
 </html>
