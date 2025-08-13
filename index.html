@@ -1075,7 +1075,7 @@
                     </thead>
                     <tbody>
                         <tr style="background: #d5f4e6;">
-                            <td><strong>無風險</strong></td>
+                            <td><strong>低風險</strong></td>
                             <td>0-3分</td>
                             <td>年度定期追蹤</td>
                             <td>12個月</td>
@@ -1940,7 +1940,7 @@
             
             let riskLevel;
             if (totalScore <= 3) {
-                riskLevel = '無風險';
+                riskLevel = '低風險';
             } else if (totalScore <= 7) {
                 riskLevel = '中度風險';
             } else {
@@ -1986,14 +1986,14 @@
             const successResults = processedResults.filter(r => !r.error);
             
             // 統計摘要
-            const noRisk = successResults.filter(r => r.riskLevel === '無風險').length;
+            const noRisk = successResults.filter(r => r.riskLevel === '低風險').length;
             const mediumRisk = successResults.filter(r => r.riskLevel === '中度風險').length;
             const highRisk = successResults.filter(r => r.riskLevel === '高度風險').length;
             
             const summaryHTML = `
                 <div class="summary-card no-risk">
                     <div class="summary-number">${noRisk}</div>
-                    <div class="summary-label">無風險患者</div>
+                    <div class="summary-label">低風險患者</div>
                 </div>
                 <div class="summary-card medium-risk">
                     <div class="summary-number">${mediumRisk}</div>
@@ -2039,7 +2039,7 @@
                                 `;
                             }
                             
-                            const riskClass = result.riskLevel === '無風險' ? 'no-risk' : 
+                            const riskClass = result.riskLevel === '低風險' ? 'no-risk' : 
                                             result.riskLevel === '中度風險' ? 'medium-risk' : 'high-risk';
                             
                             const noteText = result.missingData ? 
@@ -2139,7 +2139,7 @@
             let riskLevel, riskColor, recommendation;
             
             if (totalScore <= 3) {
-                riskLevel = '無風險';
+                riskLevel = '低風險';
                 riskColor = '#27ae60';
                 recommendation = '年度定期追蹤即可。維持健康生活型態，注意體重控制。若出現打鼾加重或日間嗜睡症狀，建議提前回檢。';
             } else if (totalScore <= 7) {
