@@ -256,24 +256,31 @@
             font-weight: bold;
             font-size: 12px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            /* 🔴 添加白色邊框 */
+            border-right: 1px solid white;
+        }
+
+        /* 🔴 添加：最後一個不需要右邊框 */
+        .scale-segment:last-child {
+            border-right: none;
         }
         
-        .seg-0 { background: #27ae60; }
-        .seg-1 { background: #2ecc71; }
-        .seg-2 { background: #58d68d; }
-        .seg-3 { background: #7fb069; }
-        .seg-4 { background: #e67e22; }
-        .seg-5 { background: #f39c12; }
-        .seg-6 { background: #f1c40f; }
-        .seg-7 { background: #f4d03f; }
-        .seg-8 { background: #e74c3c; }
-        .seg-9 { background: #dc143c; }
-        .seg-10 { background: #c0392b; }
-        .seg-11 { background: #b03a2e; }
-        .seg-12 { background: #a93226; }
-        .seg-13 { background: #922b21; }
-        .seg-14 { background: #7b241c; }
-        
+        .seg-0 { background: #549A9A; }   /* 低風險起點 */
+        .seg-1 { background: #5FA19B; }   /* 低風險過渡 */
+        .seg-2 { background: #6AA89D; }   /* 低風險過渡 */
+        .seg-3 { background: #75AF9E; }   /* 低風險結束 */
+        .seg-4 { background: #8BB5A4; }   /* 低→中過渡 */
+        .seg-5 { background: #A1BAAA; }   /* 低→中過渡 */
+        .seg-6 { background: #B7BFAF; }   /* 接近中風險 */
+        .seg-7 { background: #C8C0B1; }   /* 中風險 */
+        .seg-8 { background: #D4B2A2; }   /* 中→高過渡 */
+        .seg-9 { background: #DAAA9F; }   /* 中→高過渡 */
+        .seg-10 { background: #E39F96; }  /* 中→高過渡 */
+        .seg-11 { background: #E5948D; }  /* 接近高風險 */
+        .seg-12 { background: #E5897B; }  /* 高風險過渡 */
+        .seg-13 { background: #E58474; }  /* 高風險過渡 */
+        .seg-14 { background: #E07A63; }  /* 高風險終點 (調深) */
+                
         .score-indicator {
             position: absolute;
             top: -10px;
@@ -855,6 +862,25 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        .export-image-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: block;
+            margin: 15px auto;
+        }
+
+        .export-image-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(52, 152, 219, 0.3);
+        }
+
     </style>
 </head>
 <body>
@@ -931,6 +957,10 @@
                     </div>
                     
                     <div class="result-section" id="resultSection">
+                        <div id="patientInfoForExport" style="margin-bottom: 20px; padding: 15px; background: #e8f4fd; border-radius: 10px; font-size: 14px;">
+                            <strong>患者：</strong><span id="displayPatientName">-</span> | 
+                            <strong>檢查日期：</strong><span id="displayAssessmentDate">-</span>
+                        </div>
                         <h3 style="color: #2c3e50; margin-bottom: 20px;">評估結果</h3>
                         <div class="total-score" id="totalScore">0</div>
                         <div style="font-size: 16px; color: #7f8c8d; margin-bottom: 15px;">總分</div>
@@ -961,6 +991,7 @@
                             <h4 style="margin-top: 0; color: #2c3e50;">建議處置</h4>
                             <p id="recommendationText">請先進行評估</p>
                         </div>
+                        <button class="export-image-btn" onclick="exportResultAsImage()">📷 匯出結果圖片</button>
                     </div>
                 </div>
                 
@@ -1104,6 +1135,21 @@
         pdfScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
         document.head.appendChild(pdfScript);
         
+        // 載入html2canvas庫
+        function loadHtml2Canvas() {
+            if (typeof html2canvas === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                script.onload = function() {
+                    console.log('html2canvas 庫載入完成');
+                };
+                document.head.appendChild(script);
+            }
+        }
+
+        // 頁面載入時載入庫
+        loadHtml2Canvas();
+
         // 載入SheetJS庫用於Excel匯出
         const xlsxScript = document.createElement('script');
         xlsxScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
@@ -1162,7 +1208,7 @@
         let uploadedFiles = [];
         let processedResults = [];
         
-        // 拖拽上傳功能
+        // 拖曳上傳功能
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('pdfFiles');
         
@@ -1187,6 +1233,54 @@
             handleFileUpload(files);
         });
         
+        async function exportResultAsImage() {
+            const resultElement = document.getElementById('resultSection');
+            
+            if (!resultElement || resultElement.style.display === 'none') {
+                alert('請先進行風險評估！');
+                return;
+            }
+            
+            try {
+                // 等待html2canvas庫載入
+                if (typeof html2canvas === 'undefined') {
+                    alert('圖片匯出功能正在載入中，請稍後再試...');
+                    return;
+                }
+                
+                // 獲取患者資訊
+                const patientName = document.getElementById('patientName').value || '未知患者';
+                const assessmentDate = document.getElementById('assessmentDate').value || '未知日期';
+                
+                // 截圖選項
+                const options = {
+                    backgroundColor: '#ffffff',
+                    scale: 2, // 高解析度
+                    useCORS: true,
+                    allowTaint: true,
+                    width: resultElement.offsetWidth,
+                    height: resultElement.offsetHeight
+                };
+                
+                // 生成截圖
+                const canvas = await html2canvas(resultElement, options);
+                
+                // 創建下載連結
+                const link = document.createElement('a');
+                link.download = `OSA風險評估結果_${patientName}_${assessmentDate}.png`;
+                link.href = canvas.toDataURL('image/png');
+                
+                // 觸發下載
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            } catch (error) {
+                console.error('匯出圖片時發生錯誤:', error);
+                alert('匯出圖片失敗，請重試！');
+            }
+        }
+
         function handleFileUpload(files) {
             uploadedFiles = [...uploadedFiles, ...files];
             displayUploadedFiles();
@@ -2103,13 +2197,14 @@
         }
         
         function updateScores() {
-            const odi3 = parseFloat(document.getElementById('odi3').value) || 0;
-            const minSpo2 = parseFloat(document.getElementById('minSpo2').value) || 0;
-            const t90 = parseFloat(document.getElementById('t90').value) || 0;
+            const odi3 = parseFloat(document.getElementById('odi3').value);
+            const minSpo2 = parseFloat(document.getElementById('minSpo2').value);
+            const t90 = parseFloat(document.getElementById('t90').value);
             
-            const odi3Score = calculateODI3Score(odi3);
-            const spo2Score = calculateSpO2Score(minSpo2);
-            const t90Score = calculateT90Score(t90);
+            // 只有當有值時才計算分數，否則顯示0
+            const odi3Score = !isNaN(odi3) ? calculateODI3Score(odi3) : 0;
+            const spo2Score = !isNaN(minSpo2) ? calculateSpO2Score(minSpo2) : 0;
+            const t90Score = !isNaN(t90) ? calculateT90Score(t90) : 0;
             
             document.getElementById('odi3Score').textContent = odi3Score;
             document.getElementById('spo2Score').textContent = spo2Score;
@@ -2140,15 +2235,15 @@
             
             if (totalScore <= 3) {
                 riskLevel = '低風險';
-                riskColor = '#27ae60';
+                riskColor = '#3F7B7B';
                 recommendation = '年度定期追蹤即可。維持健康生活型態，注意體重控制。若出現打鼾加重或日間嗜睡症狀，建議提前回檢。';
             } else if (totalScore <= 7) {
                 riskLevel = '中度風險';
-                riskColor = '#f39c12';
+                riskColor = '#A8A093';
                 recommendation = '建議3-6個月內追蹤檢查。積極進行生活型態調整：減重、戒菸、避免飲酒、採側睡姿勢。考慮安排簡易居家睡眠檢查。';
             } else {
                 riskLevel = '高度風險';
-                riskColor = '#e74c3c';
+                riskColor = '#D66B50';
                 let urgency = '';
                 if (totalScore >= 12) {
                     urgency = '極高風險 - 建議1週內轉介睡眠專科醫師。';
@@ -2173,6 +2268,13 @@
             
             document.getElementById('resultSection').style.display = 'block';
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            
+            // 更新匯出用的患者資訊顯示
+            document.getElementById('displayPatientName').textContent = 
+                document.getElementById('patientName').value || '未填寫';
+            document.getElementById('displayAssessmentDate').textContent = 
+                document.getElementById('assessmentDate').value || '未填寫';
+
         }
         
         // 添加輸入監聽器以即時更新分數
