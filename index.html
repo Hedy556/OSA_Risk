@@ -1127,19 +1127,19 @@
                     </thead>
                     <tbody>
                         <tr style="background: #b6d6d6;">
-                            <td><strong>低風險</strong></td>
+                            <td><strong>低度風險</strong></td>
                             <td>0-3分</td>
                             <td>年度定期追蹤</td>
                             <td>12個月</td>
                         </tr>
                         <tr style="background: #f5f2ec;">
-                            <td><strong>中風險</strong></td>
+                            <td><strong>中度風險</strong></td>
                             <td>4-7分</td>
                             <td>生活型態調整</td>
                             <td>3-6個月</td>
                         </tr>
                         <tr style="background: #f1dcd7;">
-                            <td><strong>高風險</strong></td>
+                            <td><strong>高度風險</strong></td>
                             <td>8-14分</td>
                             <td>立即轉介專科</td>
                             <td>依醫師指示</td>
@@ -2055,11 +2055,11 @@
             
             let riskLevel;
             if (totalScore <= 3) {
-                riskLevel = '低風險';
+                riskLevel = '低度風險';
             } else if (totalScore <= 7) {
-                riskLevel = '中風險';
+                riskLevel = '中度風險';
             } else {
-                riskLevel = '高風險';
+                riskLevel = '高度風險';
             }
             
             // 使用提取的患者姓名，如果沒有則使用檔名
@@ -2101,22 +2101,22 @@
             const successResults = processedResults.filter(r => !r.error);
             
             // 統計摘要
-            const noRisk = successResults.filter(r => r.riskLevel === '低風險').length;
-            const mediumRisk = successResults.filter(r => r.riskLevel === '中風險').length;
-            const highRisk = successResults.filter(r => r.riskLevel === '高風險').length;
+            const noRisk = successResults.filter(r => r.riskLevel === '低度風險').length;
+            const mediumRisk = successResults.filter(r => r.riskLevel === '中度風險').length;
+            const highRisk = successResults.filter(r => r.riskLevel === '高度風險').length;
             
             const summaryHTML = `
                 <div class="summary-card no-risk">
                     <div class="summary-number">${noRisk}</div>
-                    <div class="summary-label">低風險患者</div>
+                    <div class="summary-label">低度風險患者</div>
                 </div>
                 <div class="summary-card medium-risk">
                     <div class="summary-number">${mediumRisk}</div>
-                    <div class="summary-label">中風險患者</div>
+                    <div class="summary-label">中度風險患者</div>
                 </div>
                 <div class="summary-card high-risk">
                     <div class="summary-number">${highRisk}</div>
-                    <div class="summary-label">高風險患者</div>
+                    <div class="summary-label">高度風險患者</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">${successResults.length}</div>
@@ -2154,7 +2154,7 @@
                                 `;
                             }
                             
-                            const riskClass = result.riskLevel === '低風險' ? 'no-risk' : 
+                            const riskClass = result.riskLevel === '低度風險' ? 'no-risk' : 
                                             result.riskLevel === '中度風險' ? 'medium-risk' : 'high-risk';
                             
                             const noteText = result.missingData ? 
@@ -2255,23 +2255,23 @@
             let riskLevel, riskColor, recommendation;
             
             if (totalScore <= 3) {
-                riskLevel = '低風險';
+                riskLevel = '低度風險';
                 riskColor = '#3F7B7B';
                 recommendation = '年度定期追蹤即可。維持健康生活型態，注意體重控制。若出現打鼾加重或日間嗜睡症狀，建議提前回檢。';
             } else if (totalScore <= 7) {
-                riskLevel = '中風險';
+                riskLevel = '中度風險';
                 riskColor = '#A8A093';
                 recommendation = '建議3-6個月內追蹤檢查。積極進行生活型態調整：減重、戒菸、避免飲酒、採側睡姿勢。考慮安排簡易居家睡眠檢查。';
             } else {
-                riskLevel = '高風險';
+                riskLevel = '高度風險';
                 riskColor = '#D66B50';
                 let urgency = '';
                 if (totalScore >= 12) {
-                    urgency = '極高風險 - 建議1週內轉介睡眠專科醫師。';
+                    urgency = '極高度風險 - 建議1週內轉介睡眠專科醫師。';
                 } else if (totalScore >= 9) {
-                    urgency = '高風險 - 建議2週內轉介睡眠專科醫師。';
+                    urgency = '高度風險 - 建議2週內轉介睡眠專科醫師。';
                 } else {
-                    urgency = '中高風險 - 建議1個月內安排進一步檢查。';
+                    urgency = '中高度風險 - 建議1個月內安排進一步檢查。';
                 }
                 recommendation = urgency + '立即安排完整睡眠檢查(PSG)，評估CPAP呼吸器治療需求，並監測心血管併發症風險。';
             }
