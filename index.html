@@ -316,7 +316,7 @@
         }
         
         .guide-table th {
-            background: #3498db;
+            background: #87aabd;
             color: white;
             padding: 12px;
             text-align: center;
@@ -353,6 +353,21 @@
             margin-bottom: 15px;
             text-align: center;
             font-size: 16px;
+            border-bottom: 2px solid;     /* 添加底線 */
+            padding-bottom: 8px;          /* 文字與底線的間距 */
+        }
+
+        /* 為不同項目設定不同的底線顏色 */
+        .guide-item:nth-child(1) .guide-item-title {
+            border-bottom-color: #838383;  /* 紅色底線 - ODI 3% */
+        }
+
+        .guide-item:nth-child(2) .guide-item-title {
+            border-bottom-color: #838383;  /* 橘色底線 - 最小SpO2 */
+        }
+
+        .guide-item:nth-child(3) .guide-item-title {
+            border-bottom-color: #838383;  /* 黃色底線 - T90 */
         }
         
         .guide-item-content {
@@ -598,15 +613,15 @@
         }
         
         .summary-card.no-risk {
-            border-left-color: #27ae60;
+            border-left-color: #549A9A;
         }
         
         .summary-card.medium-risk {
-            border-left-color: #f39c12;
+            border-left-color: #C8C0B1;
         }
         
         .summary-card.high-risk {
-            border-left-color: #e74c3c;
+            border-left-color: #E5846E;
         }
         
         .summary-number {
@@ -651,25 +666,31 @@
         }
         
         .risk-badge {
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
+            padding: 8px 8px;         /* 增加內邊距 */
+            border-radius: 12px;        /* 圓角 */
+            font-size: 13px;            /* 稍微增大字體 */
             font-weight: bold;
+            display: inline-block;
+            text-align: center;
+            line-height: 1;             /* 單行顯示 */
+            min-width: 30px;            /* 適合三個字的寬度 */
+            white-space: nowrap;        /* 防止換行 */
+            vertical-align: middle;
         }
         
         .risk-badge.no-risk {
-            background: #d5f4e6;
-            color: #27ae60;
+            background: #549A9A;
+            color: #ffffff;
         }
         
         .risk-badge.medium-risk {
-            background: #fef9e7;
-            color: #f39c12;
+            background: #e2ddd4;
+            color: #666461;
         }
         
         .risk-badge.high-risk {
-            background: #fadbd8;
-            color: #e74c3c;
+            background: #fccabf;
+            color: #cf6d56;
         }
         
         .divider {
@@ -1059,7 +1080,7 @@
                 
                 <div class="parameter-guide">
                     <div class="guide-item">
-                        <div class="guide-item-title">🔴 ODI 3% 評分</div>
+                        <div class="guide-item-title">ODI 3% 評分</div>
                         <div class="guide-item-content">
                             <strong>≥25：</strong> 6分<br>
                             <strong>15-24：</strong> 5分<br>
@@ -1072,7 +1093,7 @@
                     </div>
                     
                     <div class="guide-item">
-                        <div class="guide-item-title">🟠 最小SpO2評分</div>
+                        <div class="guide-item-title">最小SpO2評分</div>
                         <div class="guide-item-content">
                             <strong>&lt;70%：</strong> 5分<br>
                             <strong>70-74%：</strong> 4分<br>
@@ -1084,7 +1105,7 @@
                     </div>
                     
                     <div class="guide-item">
-                        <div class="guide-item-title">🟡 T90 評分</div>
+                        <div class="guide-item-title">T90 評分</div>
                         <div class="guide-item-content">
                             <strong>&gt;15%：</strong> 4分<br>
                             <strong>11-15%：</strong> 3分<br>
@@ -1105,20 +1126,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="background: #d5f4e6;">
+                        <tr style="background: #b6d6d6;">
                             <td><strong>低風險</strong></td>
                             <td>0-3分</td>
                             <td>年度定期追蹤</td>
                             <td>12個月</td>
                         </tr>
-                        <tr style="background: #fef9e7;">
-                            <td><strong>中度風險</strong></td>
+                        <tr style="background: #f5f2ec;">
+                            <td><strong>中風險</strong></td>
                             <td>4-7分</td>
                             <td>生活型態調整</td>
                             <td>3-6個月</td>
                         </tr>
-                        <tr style="background: #fadbd8;">
-                            <td><strong>高度風險</strong></td>
+                        <tr style="background: #f1dcd7;">
+                            <td><strong>高風險</strong></td>
                             <td>8-14分</td>
                             <td>立即轉介專科</td>
                             <td>依醫師指示</td>
@@ -2036,9 +2057,9 @@
             if (totalScore <= 3) {
                 riskLevel = '低風險';
             } else if (totalScore <= 7) {
-                riskLevel = '中度風險';
+                riskLevel = '中風險';
             } else {
-                riskLevel = '高度風險';
+                riskLevel = '高風險';
             }
             
             // 使用提取的患者姓名，如果沒有則使用檔名
@@ -2081,8 +2102,8 @@
             
             // 統計摘要
             const noRisk = successResults.filter(r => r.riskLevel === '低風險').length;
-            const mediumRisk = successResults.filter(r => r.riskLevel === '中度風險').length;
-            const highRisk = successResults.filter(r => r.riskLevel === '高度風險').length;
+            const mediumRisk = successResults.filter(r => r.riskLevel === '中風險').length;
+            const highRisk = successResults.filter(r => r.riskLevel === '高風險').length;
             
             const summaryHTML = `
                 <div class="summary-card no-risk">
@@ -2091,11 +2112,11 @@
                 </div>
                 <div class="summary-card medium-risk">
                     <div class="summary-number">${mediumRisk}</div>
-                    <div class="summary-label">中度風險患者</div>
+                    <div class="summary-label">中風險患者</div>
                 </div>
                 <div class="summary-card high-risk">
                     <div class="summary-number">${highRisk}</div>
-                    <div class="summary-label">高度風險患者</div>
+                    <div class="summary-label">高風險患者</div>
                 </div>
                 <div class="summary-card">
                     <div class="summary-number">${successResults.length}</div>
@@ -2238,11 +2259,11 @@
                 riskColor = '#3F7B7B';
                 recommendation = '年度定期追蹤即可。維持健康生活型態，注意體重控制。若出現打鼾加重或日間嗜睡症狀，建議提前回檢。';
             } else if (totalScore <= 7) {
-                riskLevel = '中度風險';
+                riskLevel = '中風險';
                 riskColor = '#A8A093';
                 recommendation = '建議3-6個月內追蹤檢查。積極進行生活型態調整：減重、戒菸、避免飲酒、採側睡姿勢。考慮安排簡易居家睡眠檢查。';
             } else {
-                riskLevel = '高度風險';
+                riskLevel = '高風險';
                 riskColor = '#D66B50';
                 let urgency = '';
                 if (totalScore >= 12) {
